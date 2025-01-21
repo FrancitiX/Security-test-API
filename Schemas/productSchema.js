@@ -8,6 +8,7 @@ const prodcutSchema = new Schema(
     price: Number,
     description: String,
     category: String,
+    quantity: Number,
     tags: [String],
     date: { date: String, time: String },
   },

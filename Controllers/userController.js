@@ -42,7 +42,7 @@ const registerUser = async (req, res) => {
 
   try {
     const salt = Salt(name);
-    const pepper = "FXK";
+    const pepper = process.env.PEPPER;
     const enPassword = await bcrypt.hash(pepper + password + salt, 12);
     const oldEmail = await User.findOne({ email: email });
 
@@ -113,10 +113,10 @@ const loginUser = async (req, res) => {
         .status(404)
         .json({ status: "error", data: "Usuario no registrado" });
     }
-
-    const pepper = "FXK";
+    const { salt } = userToCheck;
+    const pepper = process.env.PEPPER;
     const isPasswordValid = await bcrypt.compare(
-      password + pepper,
+      pepper + password + salt,
       userToCheck.pass
     );
 
