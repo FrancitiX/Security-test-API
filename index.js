@@ -7,6 +7,7 @@ const MONGO_URL = process.env.DB_URI;
 const PORT = process.env.PORT;
 // const allowedOrigins = process.env.ORIGINS.split(",");
 
+
 const app = express();
 
 // const corsOptions = {
@@ -113,4 +114,6 @@ app.get("/CompareDB", BC_UController.Compare);
 // Dependencias
 
 // npm install
-// npm i express body-parser mongoose multer cors
+// npm i express body-parser mongoose multer cors jsonwebtoken bcrypt
+// npm install dotenv
+
