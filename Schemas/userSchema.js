@@ -20,10 +20,11 @@ const userSchema = new Schema(
     },
     salt: String,
     pass: String,
-    type: String,
+    type: Number,
     date: { date: String, time: String },
   },
   {
+    timestamps: true,
     collection: "users",
   }
 );

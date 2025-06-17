@@ -23,7 +23,7 @@ const app = express();
 // };
 // app.use(cors(corsOptions));
 // app.options("*", cors(corsOptions));
-app.use(cors);
+app.use(cors());
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,23 +41,23 @@ mongoose
 
     const changeStream = User.watch();
 
-    changeStream.on("change", async (change) => {
-      if (change.operationType === "insert") {
-        try {
-          const newDoc = change.fullDocument;
-          await BC_U.create(newDoc);
-        } catch (error) {
-          console.error("Error al respaldar documento:", error);
-        }
-      } else if (change.operationType === "delete") {
-        try {
-          const deletedId = change.documentKey._id;
-          await BC_U.deleteOne({ _id: deletedId });
-        } catch (error) {
-          console.error("Error al eliminar documento de BC_U:", error);
-        }
-      }
-    });
+    // changeStream.on("change", async (change) => {
+    //   if (change.operationType === "insert") {
+    //     try {
+    //       const newDoc = change.fullDocument;
+    //       await BC_U.create(newDoc);
+    //     } catch (error) {
+    //       console.error("Error al respaldar documento:", error);
+    //     }
+    //   } else if (change.operationType === "delete") {
+    //     try {
+    //       const deletedId = change.documentKey._id;
+    //       await BC_U.deleteOne({ _id: deletedId });
+    //     } catch (error) {
+    //       console.error("Error al eliminar documento de BC_U:", error);
+    //     }
+    //   }
+    // });
   })
   .catch((err) => {
     console.error("Error al conectar a MongoDB", err), console.log("");
@@ -74,12 +74,12 @@ app.get("/", (req, res) => {
 //Controladores de solicitudes
 const userController = require("./Controllers/userController");
 const user_imageController = require("./Controllers/user_imageController");
-const BC_UController = require("./Controllers/BC_UController");
+// const BC_UController = require("./Controllers/BC_UController");
 const productController = require("./Controllers/productController");
 
 //Solicitudes a la base de datos para usuarios
 
-app.post("/register", userController.registerUser);
+app.post("/newUser", userController.registerUser);
 
 app.post("/user-aval", userController.user_aval);
 
@@ -95,22 +95,23 @@ app.delete("/deleteUser", userController.deleteUser);
 
 //Solicitudes a la base de datos para imagenes
 
-app.put(
-  "/updateUser-Image",
-  user_imageController.upload.single("image"),
-  user_imageController.updateUserImages
-);
+// app.put(
+//   "/updateUser-Image",
+//   user_imageController.upload.single("image"),
+//   user_imageController.updateUserImages
+// );
 
-app.post("/userImage", user_imageController.userImage);
+// app.post("/userImage", user_imageController.userImage);
 
 //Solicitudes a la base de datos para BC_U (backup de usaurios)
 
-app.get("/get-All-BC_U", BC_UController.getAllData);
+// app.get("/get-All-BC_U", BC_UController.getAllData);
 
-app.get("/CompareDB", BC_UController.Compare);
+// app.get("/CompareDB", BC_UController.Compare);
 
 
 // Dependencias
 
 // npm install
-// npm i express body-parser mongoose multer cors
+// npm i express body-parser mongoose multer cors dotenv jsonwebtoken bcrypt
+

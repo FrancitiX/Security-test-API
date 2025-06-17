@@ -7,11 +7,16 @@ const prodcutSchema = new Schema(
     data_product: { type: String, unique: true },
     price: Number,
     description: String,
+    features: [Object],
+    rating: Number,
     category: String,
     tags: [String],
+    sales: Number,
+    stock: Number,
     date: { date: String, time: String },
   },
   {
+    timestamps: true,
     collection: "products",
   }
 );

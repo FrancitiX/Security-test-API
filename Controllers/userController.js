@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 const app = express();
 app.use(express.json());
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 require("dotenv").config();
+const pepper = process.env.PEPPER;
 
 require("./../Schemas/userSchema");
 require("../Schemas/BC_Uschema");
@@ -38,11 +40,10 @@ const registerUser = async (req, res) => {
     email,
     type,
   } = req.body;
-  console.log(req.body);
+  console.log("Usuario: ", req.body);
 
   try {
     const salt = Salt(name);
-    const pepper = "FXK";
     const enPassword = await bcrypt.hash(pepper + password + salt, 12);
     const oldEmail = await User.findOne({ email: email });
 
@@ -114,9 +115,8 @@ const loginUser = async (req, res) => {
         .json({ status: "error", data: "Usuario no registrado" });
     }
 
-    const pepper = "FXK";
     const isPasswordValid = await bcrypt.compare(
-      password + pepper,
+      pepper + password + userToCheck.salt,
       userToCheck.pass
     );
 
