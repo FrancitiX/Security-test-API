@@ -79,7 +79,7 @@ const productController = require("./Controllers/productController");
 
 //Solicitudes a la base de datos para usuarios
 
-app.post("/newUser", userController.registerUser);
+app.post("/newUser", userController.createUser);
 
 app.post("/user-aval", userController.user_aval);
 

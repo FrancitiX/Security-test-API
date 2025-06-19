@@ -28,7 +28,7 @@ const Salt = (username) => {
   return `${firstLetter}${lastLetter}${randomPart}`;
 };
 
-const registerUser = async (req, res) => {
+const createUser = async (req, res) => {
   const {
     name,
     paternal_surname,
@@ -134,7 +134,7 @@ const loginUser = async (req, res) => {
 
     return res.status(200).json({
       status: "ok",
-      usuario: userToCheck.user_name,
+      usuario: userToCheck.type,
       token: token,
     });
   } catch (error) {
@@ -259,7 +259,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-  registerUser,
+  createUser,
   user_aval,
   loginUser,
   userData,
